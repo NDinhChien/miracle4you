@@ -1,0 +1,23 @@
+spring:
+  profiles:
+    active: dev
+  application:
+    name: mfy
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  jpa:
+    open-in-view: true
+
+# Spring docs
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+
+# logs
+logging:
+  level:
+    root: INFO
