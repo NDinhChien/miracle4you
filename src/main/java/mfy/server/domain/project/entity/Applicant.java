@@ -13,7 +13,7 @@ import mfy.server.domain.project.entity.type.TranslatorBase;
 
 @Getter
 @NoArgsConstructor
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "entityCache")
 @Entity
 @Table(name = "applicants", uniqueConstraints = { @UniqueConstraint(columnNames = { "project_id", "user_id" }) })
 public class Applicant extends TranslatorBase {

@@ -36,9 +36,9 @@ public class AuthService {
     private final TokenProvider tokenProvider;
     private final PasswordEncoder passwordEncoder;
 
-    @Value("${server.config.email-verification.required}")
+    @Value("${server.config.verification.required}")
     private boolean isEmailVerificationRequired;
-    @Value("${server.config.email-verification.html}")
+    @Value("${server.config.verification.html}")
     private boolean isHtmlTemplateEnabled;
 
     @Transactional

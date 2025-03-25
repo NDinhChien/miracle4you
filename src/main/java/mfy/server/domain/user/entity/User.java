@@ -28,7 +28,7 @@ import org.hibernate.annotations.Cache;
 
 @Getter
 @NoArgsConstructor
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "entityCache")
 @DynamicUpdate
 @Entity
 @Table(name = "users")
@@ -123,7 +123,7 @@ public class User {
 
     @JsonIgnore
     @OneToMany(mappedBy = "admin", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "entityCache")
     private List<Project> projects;
 
     @JsonIgnore

@@ -25,7 +25,7 @@ import mfy.server.domain.project.entity.Project;
 
 @Getter
 @NoArgsConstructor
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "entityCache")
 @EqualsAndHashCode(of = { "senderId", "recipientId", "projectId" })
 @Entity
 @Table(name = "chatitems", indexes = {

@@ -128,8 +128,8 @@ public class MessageManager {
         messagingTemplate.convertAndSend("/topic/message/online", Arrays.asList(user));
     }
 
-    @Scheduled(fixedDelay = 2, timeUnit = TimeUnit.MINUTES)
+    @Scheduled(fixedRate = 2, timeUnit = TimeUnit.MINUTES)
     public void sendOnlines() {
-        messagingTemplate.convertAndSend("/topic/message/online", users);
+        messagingTemplate.convertAndSend("/topic/message/online", users.values());
     }
 }

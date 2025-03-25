@@ -34,7 +34,7 @@ public class NotificationController {
     @Operation(summary = "Get notification by page")
     @GetMapping("/all")
     BaseResponse<GetNotificationResponseDto> getAll(
-            @RequestParam(defaultValue = "0") @Min(0) int page,
+            @RequestParam(defaultValue = "1") @Min(1) int page,
             @AuthenticationPrincipal UserDetailsImpl userDetails) {
         var responseDto = notificationService.getPage(userDetails.getUser(), page);
         return BaseResponse.success("Notifications", responseDto);

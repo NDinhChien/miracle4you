@@ -10,14 +10,16 @@ import io.swagger.v3.oas.annotations.servers.Server;
 import mfy.server.global.auth.TokenProvider;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 
 @OpenAPIDefinition(info = @Info(title = "APIs", version = "v1.0"), security = {
-                @SecurityRequirement(name = "bearerToken"), @SecurityRequirement(name = "access-cookie"),
-                @SecurityRequirement(name = "refresh-cookie") }, servers = { @Server(url = "/") })
+        @SecurityRequirement(name = "bearerToken"), @SecurityRequirement(name = "access-cookie"),
+        @SecurityRequirement(name = "refresh-cookie") }, servers = { @Server(url = "/") })
 @SecuritySchemes({
-                @SecurityScheme(name = "bearerToken", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT"),
-                @SecurityScheme(name = "accessCookie", type = SecuritySchemeType.APIKEY, in = SecuritySchemeIn.COOKIE, paramName = TokenProvider.AUTHORIZATION_HEADER),
+        @SecurityScheme(name = "bearerToken", type = SecuritySchemeType.HTTP, scheme = "bearer", bearerFormat = "JWT"),
+        @SecurityScheme(name = "accessCookie", type = SecuritySchemeType.APIKEY, in = SecuritySchemeIn.COOKIE, paramName = TokenProvider.AUTHORIZATION_HEADER),
 })
 @Configuration
 public class SwaggerConfig {

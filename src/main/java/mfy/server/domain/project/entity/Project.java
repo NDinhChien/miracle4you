@@ -48,7 +48,7 @@ import mfy.server.global.util.EnumUtil;
 
 @Getter
 @NoArgsConstructor
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE, region = "entityCache")
 @Entity
 @DynamicUpdate
 @Table(name = "projects", indexes = {
@@ -204,6 +204,7 @@ public class Project {
         String srcLang = requestDto.getSrcLang();
         String desLang = requestDto.getDesLang();
         String stage = requestDto.getStage();
+        Boolean isRecruiting = requestDto.getIsRecruiting();
 
         if (StringUtils.hasText(title)) {
             this.title = title;
@@ -222,6 +223,9 @@ public class Project {
         }
         if (StringUtils.hasText(stage)) {
             this.stage = EnumUtil.fromString(Stage.class, stage);
+        }
+        if (isRecruiting != null) {
+            this.isRecruiting = isRecruiting;
         }
 
         return this;

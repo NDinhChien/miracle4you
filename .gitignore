@@ -1,7 +1,7 @@
 ### env
-application-dev.yml
-application-prod.yml
-application-test.yml
+application-prod.properties
+application-dev.properties
+application-test.properties
 
 ### build
 HELP.md
@@ -10,6 +10,7 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+release
 
 ### STS ###
 .apt_generated
@@ -44,3 +45,4 @@ out/
 
 # logs
 /logs
+server.jar

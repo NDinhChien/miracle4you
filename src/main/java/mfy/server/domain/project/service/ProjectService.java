@@ -1,7 +1,6 @@
 package mfy.server.domain.project.service;
 
 import java.util.List;
-import org.hibernate.Session;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +8,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +19,6 @@ import mfy.server.domain.project.dto.ProjectResponseDto.ProjectBasicDto;
 import mfy.server.domain.project.dto.ProjectResponseDto.ProjectPublicDto;
 import mfy.server.domain.project.entity.Project;
 import mfy.server.domain.project.entity.type.Category;
-import mfy.server.domain.project.entity.type.Stage;
 import mfy.server.domain.project.repository.ProjectRepository;
 import mfy.server.domain.user.entity.User;
 import mfy.server.global.exception.BusinessException;
@@ -106,19 +103,6 @@ public class ProjectService {
             }
             return projects.stream().map(ProjectPublicDto::fromEntity).toList();
         }
-    }
-
-    @Transactional
-    public void updateProductStage(Stage stage, Long id) {
-        entityManager.createNativeQuery("UPDATE projects SET stage = ?1 WHERE id = ?2")
-                .setParameter(1, stage.name())
-                .setParameter(2, id)
-                .executeUpdate();
-
-        entityManager.unwrap(Session.class)
-                .getSessionFactory()
-                .getCache()
-                .evict(Project.class, id);
     }
 
 }

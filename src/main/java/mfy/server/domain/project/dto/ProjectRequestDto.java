@@ -13,7 +13,7 @@ import mfy.server.domain.project.entity.type.Stage;
 import mfy.server.global.validator.ValueOfEnum;
 
 public class ProjectRequestDto {
-    
+
     @Getter
     public static class ProjectCreateRequestDto {
 
@@ -46,16 +46,16 @@ public class ProjectRequestDto {
 
     @Getter
     public static class JoinProjectRequestDto {
-        
+
         private Long id;
 
     }
-    
+
     @Getter
     public static class ProjectUpdateRequestDto {
-        
+
         private String title;
-        
+
         private String description;
 
         @ValueOfEnum(enumClass = Category.class)
@@ -69,6 +69,8 @@ public class ProjectRequestDto {
 
         @ValueOfEnum(enumClass = Language.class)
         private String srcLang;
+
+        private Boolean isRecruiting;
     }
 
     @Getter
@@ -77,11 +79,11 @@ public class ProjectRequestDto {
 
         @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Only contain nummeric or alphabet characters")
         private String keywords;
-                
+
         @ValueOfEnum(enumClass = Category.class)
         private String category;
 
-        @Min(0)
+        @Min(1)
         @NotNull
         private Integer page;
 

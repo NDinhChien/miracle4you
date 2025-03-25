@@ -23,7 +23,6 @@ import mfy.server.domain.project.dto.ProjectRequestDto.JoinProjectRequestDto;
 import mfy.server.domain.project.dto.ProjectRequestDto.ProjectCreateRequestDto;
 import mfy.server.domain.project.dto.ProjectRequestDto.ProjectSearchRequestDto;
 import mfy.server.domain.project.dto.ProjectRequestDto.ProjectUpdateRequestDto;
-import mfy.server.domain.project.dto.ProjectResponseDto.IProjectPublicDto;
 import mfy.server.domain.project.dto.ProjectResponseDto.ProjectBasicDto;
 import mfy.server.domain.project.dto.ProjectResponseDto.ProjectDto;
 import mfy.server.domain.project.dto.ProjectResponseDto.ProjectPublicDto;

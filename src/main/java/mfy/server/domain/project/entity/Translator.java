@@ -14,7 +14,7 @@ import mfy.server.domain.project.entity.type.TranslatorBase;
 
 @Getter
 @NoArgsConstructor
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "entityCache")
 @Table(name = "translators", uniqueConstraints = { @UniqueConstraint(columnNames = { "project_id", "user_id" }) })
 @Entity
 public class Translator extends TranslatorBase {

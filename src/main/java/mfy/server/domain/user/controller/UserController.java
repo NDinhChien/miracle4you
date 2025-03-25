@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.Cache;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
@@ -18,9 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
@@ -36,10 +33,7 @@ import mfy.server.domain.user.dto.UserResponseDto.UserProfileResponseDto;
 import mfy.server.domain.user.entity.User;
 import mfy.server.domain.user.service.UserService;
 import mfy.server.global.dto.BaseResponse;
-import mfy.server.global.exception.BusinessException;
-import mfy.server.global.exception.ErrorConfig.ErrorMessage;
 import mfy.server.global.security.UserDetailsImpl;
-import mfy.server.global.service.ValidatorService;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -49,7 +43,6 @@ import mfy.server.global.service.ValidatorService;
 @RestController
 public class UserController {
 
-    private final ValidatorService validator;
     private final UserService userService;
 
     @Autowired
@@ -76,16 +69,8 @@ public class UserController {
     @PutMapping(path = "/profile", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public BaseResponse<UserPublicDto> updateUser(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
-            @Schema(example = "{\r\n  \"nickname\": \"dinhchien\",\r\n  \"fullName\": \"Nguyen Dinh Chien\",\r\n  \"gender\": \"male\",\r\n  \"diocese\": \"Xuan Loc\",\r\n  \"parish\": \"Dong Hoa\",\r\n  \"birthday\": \"16-02-2002\",\r\n  \"bio\": \"I am a developer\"\r\n}") @RequestPart(name = "profile") String requestDtoJson,
+            @RequestPart(name = "profile") UpdateRequestDto requestDto,
             @RequestPart(name = "avatar", required = false) MultipartFile avatar) {
-
-        UpdateRequestDto requestDto = null;
-        try {
-            requestDto = new ObjectMapper().readValue(requestDtoJson, UpdateRequestDto.class);
-        } catch (Exception e) {
-            throw new BusinessException(HttpStatus.BAD_REQUEST, ErrorMessage.INVALID_PAYLOAD);
-        }
-        validator.validate(requestDto);
         User updateUser = userService.updateProfile(userDetails.getUser(), requestDto, avatar);
         return BaseResponse.success("User profile updated", UserPublicDto.fromEntity(updateUser));
     }
