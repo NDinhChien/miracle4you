@@ -1,6 +1,6 @@
 package mfy.server.domain.user.repository;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -54,5 +54,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying
     @Query("UPDATE User u SET u.lastOnline = :lastOnline WHERE u.id = :id")
-    void updateLastOnline(Long id, LocalDateTime lastOnline);
+    void updateLastOnline(Long id, Instant lastOnline);
 }

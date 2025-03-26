@@ -1,6 +1,6 @@
 package mfy.server.domain.message.service;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -85,7 +85,7 @@ public class MessageManager {
     }
 
     private void updateLastOnline(User user) {
-        userRepository.updateLastOnline(user.getId(), LocalDateTime.now());
+        userRepository.updateLastOnline(user.getId(), Instant.now());
     }
 
     private int getMemberCount(Long projectId) {

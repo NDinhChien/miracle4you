@@ -1,6 +1,6 @@
 package mfy.server.domain.project.entity.type;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.FetchType;
@@ -44,7 +44,7 @@ public class TranslatorBase {
     private Long projectId;
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     public TranslatorBase(User user, Project project) {
         this.user = user;
@@ -56,7 +56,7 @@ public class TranslatorBase {
     @PrePersist
     public void prePersist() {
         if (createdAt == null) {
-            createdAt = LocalDateTime.now();
+            createdAt = Instant.now();
         }
     }
 }

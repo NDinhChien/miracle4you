@@ -1,6 +1,7 @@
 package mfy.server.domain.message.dto;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.validation.annotation.Validated;
@@ -73,6 +74,6 @@ public class MessageRequestDto {
         Boolean isSuccess;
 
         @NotNull
-        LocalDateTime uploadedAt;
+        Instant uploadedAt;
     }
 }

@@ -1,6 +1,6 @@
 package mfy.server.domain.message.dto;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -46,9 +46,9 @@ public class MessageResponseDto {
 
         String getContent();
 
-        LocalDateTime getCreatedAt();
+        Instant getCreatedAt();
 
-        LocalDateTime getUpdatedAt();
+        Instant getUpdatedAt();
 
         Boolean getIsDeleted();
 
@@ -80,8 +80,8 @@ public class MessageResponseDto {
     public static record MessageBaseDto(
             Long id,
             String content,
-            LocalDateTime createdAt,
-            LocalDateTime updatedAt,
+            Instant createdAt,
+            Instant updatedAt,
             Boolean isDeleted,
             List<Attachment> attachments) {
     }
@@ -89,8 +89,8 @@ public class MessageResponseDto {
     public static record SystemMessageDto(
             Long id,
             String content,
-            LocalDateTime createdAt,
-            LocalDateTime updatedAt,
+            Instant createdAt,
+            Instant updatedAt,
             Boolean isDeleted,
             Boolean isLasting,
             List<Attachment> attachments) {
@@ -100,8 +100,8 @@ public class MessageResponseDto {
     public static record GlobalMessageDto(
             Long id,
             String content,
-            LocalDateTime createdAt,
-            LocalDateTime updatedAt,
+            Instant createdAt,
+            Instant updatedAt,
             Boolean isDeleted,
             List<Attachment> attachments,
             Long senderId) {
@@ -111,8 +111,8 @@ public class MessageResponseDto {
     public static record ProjectMessageDto(
             Long id,
             String content,
-            LocalDateTime createdAt,
-            LocalDateTime updatedAt,
+            Instant createdAt,
+            Instant updatedAt,
             Boolean isDeleted,
             List<Attachment> attachments,
             Long senderId,
@@ -123,8 +123,8 @@ public class MessageResponseDto {
     public static record PrivateMessageDto(
             Long id,
             String content,
-            LocalDateTime createdAt,
-            LocalDateTime updatedAt,
+            Instant createdAt,
+            Instant updatedAt,
             Boolean isDeleted,
             List<Attachment> attachments,
             Long pairId,

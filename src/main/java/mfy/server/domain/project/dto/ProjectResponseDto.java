@@ -1,6 +1,6 @@
 package mfy.server.domain.project.dto;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,7 +13,7 @@ import mfy.server.domain.project.entity.type.Stage;
 
 public class ProjectResponseDto {
 
-    public static record TranslatorBaseDto(Long userId, Long projectId, LocalDateTime createdAt) {
+    public static record TranslatorBaseDto(Long userId, Long projectId, Instant createdAt) {
         public static TranslatorBaseDto fromEntity(Translator translator) {
             return new TranslatorBaseDto(
                     translator.getUserId(),
@@ -59,8 +59,8 @@ public class ProjectResponseDto {
             Stage stage,
             Integer views,
             Integer likes,
-            LocalDateTime createdAt,
-            LocalDateTime publishedAt) {
+            Instant createdAt,
+            Instant publishedAt) {
 
         public static ProjectPublicDto fromEntity(Project project) {
             return new ProjectPublicDto(
@@ -88,12 +88,12 @@ public class ProjectResponseDto {
             Stage stage,
             Integer views,
             Integer likes,
-            LocalDateTime createdAt,
-            LocalDateTime publishedAt,
+            Instant createdAt,
+            Instant publishedAt,
             Boolean isRecruiting,
             String description,
             Long adminId,
-            LocalDateTime deadline,
+            Instant deadline,
             Long publishedById,
             List<TranslatorBaseDto> translators,
             List<TranslatorBaseDto> applicants) {
@@ -131,7 +131,7 @@ public class ProjectResponseDto {
 
         Long getProjectId();
 
-        LocalDateTime getCreatedAt();
+        Instant getCreatedAt();
     }
 
     public static interface IProjectBasicDto {
@@ -161,15 +161,15 @@ public class ProjectResponseDto {
 
         Stage getStage();
 
-        LocalDateTime getDeadline();
+        Instant getDeadline();
 
         Boolean getIsRecruiting();
 
         Boolean getIsDeleted();
 
-        LocalDateTime getCreatedAt();
+        Instant getCreatedAt();
 
-        LocalDateTime getPublishedAt();
+        Instant getPublishedAt();
 
         Long getPublishedById();
 

@@ -4,7 +4,7 @@ import mfy.server.domain.message.dto.MessageResponseDto.GlobalMessageDto;
 import mfy.server.domain.message.entity.GlobalMessage;
 import mfy.server.domain.user.entity.User;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -17,5 +17,5 @@ public interface GlobalMessageRepository extends JpaRepository<GlobalMessage, Lo
 
     Page<GlobalMessageDto> findAllBy(Pageable pageable);
 
-    List<GlobalMessageDto> findBySenderAndCreatedAtGreaterThan(User sender, LocalDateTime createdAt);
+    List<GlobalMessageDto> findBySenderAndCreatedAtGreaterThan(User sender, Instant createdAt);
 }

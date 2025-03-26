@@ -1,6 +1,6 @@
 package mfy.server.domain.user.entity;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -62,7 +62,7 @@ public class ChatItem {
     private Project project;
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @Column(nullable = false)
     private Boolean isDeleted;
@@ -76,7 +76,7 @@ public class ChatItem {
     @PrePersist
     public void prePersist() {
         if (createdAt == null) {
-            createdAt = LocalDateTime.now();
+            createdAt = Instant.now();
         }
         if (isDeleted == null) {
             isDeleted = true;

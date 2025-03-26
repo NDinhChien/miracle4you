@@ -1,6 +1,6 @@
 package mfy.server.domain.message.service.type;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -24,7 +24,7 @@ public class OnlineUser {
 
     private Boolean isOnline;
 
-    private LocalDateTime lastOnline;
+    private Instant lastOnline;
 
     public OnlineUser(User user) {
         this.id = user.getId();
@@ -33,7 +33,7 @@ public class OnlineUser {
         this.avatar = user.getAvatar();
         this.email = user.getEmail();
         this.isOnline = true;
-        this.lastOnline = LocalDateTime.now();
+        this.lastOnline = Instant.now();
     }
 
     public OnlineUser updateIsOnline() {
@@ -43,7 +43,7 @@ public class OnlineUser {
 
     public OnlineUser updateLastOnline() {
         this.isOnline = false;
-        this.lastOnline = LocalDateTime.now();
+        this.lastOnline = Instant.now();
         return this;
     }
 }

@@ -16,6 +16,9 @@ import mfy.server.global.exception.ErrorConfig.ErrorMessage;
 import mfy.server.global.util.CommonUtil;
 import mfy.server.global.util.ResponseUtil;
 import mfy.server.global.auth.TokenProvider;
+
+import java.time.temporal.ChronoUnit;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -90,7 +93,7 @@ public class AuthService {
 
         if (!user.canDoLogin()) {
             throw new BusinessException(HttpStatus.FORBIDDEN, String.format("You can login again after %s",
-                    CommonUtil.formatDate(user.getLastLoginFailureAt().plusMinutes(RESET_LOGIN_AFTER_MINUS))));
+                    user.getLastLoginFailureAt().plus(RESET_LOGIN_AFTER_MINUS, ChronoUnit.MINUTES)).toString());
         }
 
         if (!passwordEncoder.matches(password, user.getPassword())) {

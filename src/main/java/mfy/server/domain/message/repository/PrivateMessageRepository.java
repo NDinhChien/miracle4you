@@ -5,7 +5,7 @@ import mfy.server.domain.message.dto.MessageResponseDto.PrivateMessageDto;
 import mfy.server.domain.message.entity.PrivateMessage;
 import mfy.server.domain.user.entity.User;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 public interface PrivateMessageRepository extends JpaRepository<PrivateMessage, Long> {
     Page<PrivateMessageDto> findAllByPairId(Long pairId, Pageable pageable);
 
-    List<PrivateMessageDto> findByRecipientAndCreatedAtGreaterThan(User recipient, LocalDateTime createdAt);
+    List<PrivateMessageDto> findByRecipientAndCreatedAtGreaterThan(User recipient, Instant createdAt);
 
     long countByPairId(Long pairId);
 }

@@ -5,7 +5,7 @@ import mfy.server.domain.message.dto.MessageResponseDto.ProjectMessageDto;
 import mfy.server.domain.message.entity.ProjectMessage;
 import mfy.server.domain.project.entity.Project;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -18,7 +18,7 @@ public interface ProjectMessageRepository extends JpaRepository<ProjectMessage, 
 
     Page<ProjectMessageDto> findAllByProject(Project project, Pageable pageable);
 
-    List<ProjectMessageDto> findByProjectInAndCreatedAtGreaterThan(List<Project> projects, LocalDateTime createdAt);
+    List<ProjectMessageDto> findByProjectInAndCreatedAtGreaterThan(List<Project> projects, Instant createdAt);
 
     long countByProject(Project project);
 }

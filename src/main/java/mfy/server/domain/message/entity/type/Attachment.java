@@ -1,6 +1,6 @@
 package mfy.server.domain.message.entity.type;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class Attachment {
 
     private Boolean isSuccess;
 
-    private LocalDateTime uploadedAt;
+    private Instant uploadedAt;
 
     public Attachment(Long id, String key, String uploadUrl, String name, String type, Long size) {
         this.id = id;
@@ -38,7 +38,7 @@ public class Attachment {
         return this;
     }
 
-    public Attachment setUploadedAt(LocalDateTime uploadedAt) {
+    public Attachment setUploadedAt(Instant uploadedAt) {
         this.uploadedAt = uploadedAt;
         return this;
     }

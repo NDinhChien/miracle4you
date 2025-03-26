@@ -1,6 +1,7 @@
 package mfy.server.domain.message.service;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -124,7 +125,7 @@ public class MessageService {
 
     @Transactional
     public GetMessageResponseDto<Object> getUnreadMessages(User user) {
-        LocalDateTime lastOnline = user.getLastOnline();
+        Instant lastOnline = user.getLastOnline();
         List<GlobalMessageDto> globalMessages = globalMessageRepository.findBySenderAndCreatedAtGreaterThan(user,
                 lastOnline);
         List<SystemMessageDto> systemMessages = systemMessageRepository.findByCreatedAtGreaterThan(lastOnline);
@@ -149,8 +150,9 @@ public class MessageService {
 
     @Cacheable(value = "SystemMessages", key = "'getTodaySystemMessages'", cacheManager = "caffeinCacheManager")
     public List<SystemMessageDto> getTodaySystemMessages() {
-        LocalDateTime today = LocalDateTime.now();
-        return systemMessageRepository.findByCreatedAtGreaterThanOrIsLastingTrue(today.minusDays(1));
+        Instant today = Instant.now();
+        return systemMessageRepository.findByCreatedAtGreaterThanOrIsLastingTrue(
+                today.minus(1, ChronoUnit.DAYS));
     }
 
     @Cacheable(value = "SystemMessages", key = "#page", unless = "#result.page != #result.totalPage - 1", cacheManager = "caffeinCacheManager")
@@ -344,7 +346,7 @@ public class MessageService {
     }
 
     private void updateLastOnline(User user) {
-        userRepository.updateLastOnline(user.getId(), LocalDateTime.now());
+        userRepository.updateLastOnline(user.getId(), Instant.now());
     }
 
     private User validateUser(Long id) {

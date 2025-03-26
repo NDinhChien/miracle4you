@@ -1,11 +1,14 @@
 package mfy.server.domain.user.dto;
 
+import java.time.Instant;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
+import mfy.server.domain.user.entity.type.Gender;
 
 public class UserRequestDto {
 
@@ -16,10 +19,6 @@ public class UserRequestDto {
 
     public static final String FULLNAME_MESSAGE = "Fullname must contain only alphabetic characters and spaces";
     public static final String FULLNAME_PATTERN = "^[a-zA-Z\\s]*$";
-
-    public static final String BIRTHDAY_PATTERN = "^[0-9-]{10}$";
-
-    public static final String GENDER_PATTERN = "^(male|female)$";
 
     @Getter
     public static class LoginRequestDto {
@@ -75,9 +74,8 @@ public class UserRequestDto {
         @Schema(description = "Enter your full name.", example = "Nguyen Dinh Chien")
         private String fullName;
 
-        @Pattern(regexp = GENDER_PATTERN, message = "Male or female", flags = Pattern.Flag.CASE_INSENSITIVE)
         @Schema(description = "Male or female", example = "male")
-        private String gender;
+        private Gender gender;
 
         @Size(max = 50)
         @Schema(description = "Diocese where you live.", example = "Xuan Loc")
@@ -91,10 +89,8 @@ public class UserRequestDto {
         @Schema(description = "Introduce yourself", example = "I am a developer")
         private String bio;
 
-        @Pattern(regexp = BIRTHDAY_PATTERN, message = "Birthday format is dd-MM-YYY")
-        @Size(min = 10, max = 10)
-        @Schema(description = "Your date of birth", example = "16-02-2002")
-        private String birthday;
+        @Schema(description = "Your date of birth", example = "")
+        private Instant birthday;
 
     }
 

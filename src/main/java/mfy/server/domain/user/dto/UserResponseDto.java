@@ -3,7 +3,7 @@ package mfy.server.domain.user.dto;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +49,7 @@ public class UserResponseDto {
             String avatar,
             String fullName,
             Integer score,
-            LocalDateTime joinedAt) {
+            Instant joinedAt) {
 
         public static UserBasicDto fromEntity(User user) {
             return new UserBasicDto(
@@ -68,9 +68,9 @@ public class UserResponseDto {
             String avatar,
             String fullName,
             Integer score,
-            LocalDateTime joinedAt,
+            Instant joinedAt,
 
-            LocalDateTime birthday,
+            Instant birthday,
             Gender gender,
             String bio,
             String diocese,
@@ -100,9 +100,9 @@ public class UserResponseDto {
             String avatar,
             String fullName,
             Integer score,
-            LocalDateTime joinedAt,
+            Instant joinedAt,
 
-            LocalDateTime birthday,
+            Instant birthday,
             Gender gender,
             String bio,
             String diocese,
@@ -112,7 +112,7 @@ public class UserResponseDto {
             String email,
             Boolean isVerified,
             Boolean isBanned,
-            LocalDateTime lastUpdateProfile,
+            Instant lastUpdateProfile,
             List<TranslatorBaseDto> translators,
             List<TranslatorBaseDto> applicants) {
 
@@ -156,12 +156,12 @@ public class UserResponseDto {
 
         String getFullName();
 
-        LocalDateTime getJoinedAt();
+        Instant getJoinedAt();
     }
 
     public static interface IUserPublicDto extends IUserBasicDto {
 
-        LocalDateTime getBirthday();
+        Instant getBirthday();
 
         Gender getGender();
 
@@ -184,11 +184,11 @@ public class UserResponseDto {
 
         Role getRole();
 
-        LocalDateTime getLastUpdateNickname();
+        Instant getLastUpdateNickname();
 
-        LocalDateTime getLastUpdateProfile();
+        Instant getLastUpdateProfile();
 
-        LocalDateTime getLastLoginSuccessAt();
+        Instant getLastLoginSuccessAt();
 
         List<ITranslatorBaseDto> getApplicants();
 

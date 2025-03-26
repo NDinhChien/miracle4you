@@ -1,6 +1,6 @@
 package mfy.server.domain.project.entity;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -112,13 +112,13 @@ public class Project {
     private Stage stage;
 
     @Column
-    private LocalDateTime deadline;
+    private Instant deadline;
 
     @Column(nullable = false)
     private Boolean isRecruiting;
 
     @Column
-    private LocalDateTime publishedAt;
+    private Instant publishedAt;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
@@ -132,7 +132,7 @@ public class Project {
     private Boolean isDeleted;
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @JsonIgnore
     @OneToMany(mappedBy = "project", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -190,7 +190,7 @@ public class Project {
             this.isRecruiting = false;
         }
         if (this.createdAt == null) {
-            this.createdAt = LocalDateTime.now();
+            this.createdAt = Instant.now();
         }
         if (this.isDeleted == null) {
             this.isDeleted = false;

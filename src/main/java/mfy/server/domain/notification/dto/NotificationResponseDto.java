@@ -1,6 +1,6 @@
 package mfy.server.domain.notification.dto;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import lombok.Getter;
@@ -18,12 +18,13 @@ public class NotificationResponseDto {
             this.totalPage = totalPage;
         }
     }
+
     public static interface INotification {
         Long getId();
-        
+
         String getContent();
 
-        LocalDateTime getCreatedAt();
+        Instant getCreatedAt();
 
         Long getRecipientId();
 

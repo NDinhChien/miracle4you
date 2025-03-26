@@ -1,6 +1,7 @@
 package mfy.server.domain.message.entity.type;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.Instant;
 import java.util.List;
 
 import org.hibernate.annotations.JdbcTypeCode;
@@ -30,10 +31,10 @@ public class MessageBase {
     private String content;
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @Column(nullable = false)
-    private LocalDateTime updatedAt;
+    private Instant updatedAt;
 
     @Column(nullable = false)
     private Boolean isDeleted;
@@ -45,10 +46,10 @@ public class MessageBase {
     @PrePersist
     public void prePersist() {
         if (createdAt == null) {
-            createdAt = LocalDateTime.now();
+            createdAt = Instant.now();
         }
         if (updatedAt == null) {
-            updatedAt = LocalDateTime.now();
+            updatedAt = Instant.now();
         }
         if (isDeleted == null) {
             isDeleted = false;
@@ -69,7 +70,7 @@ public class MessageBase {
 
     public MessageBase updateContent(String content) {
         this.content = content;
-        this.updatedAt = LocalDateTime.now();
+        this.updatedAt = Instant.now();
         return this;
     }
 

@@ -2,7 +2,7 @@ package mfy.server.domain.message.repository;
 
 import mfy.server.domain.message.dto.MessageResponseDto.SystemMessageDto;
 import mfy.server.domain.message.entity.SystemMessage;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,7 +14,7 @@ public interface SystemMessageRepository extends JpaRepository<SystemMessage, Lo
 
     Page<SystemMessageDto> findAllBy(Pageable pageable);
 
-    List<SystemMessageDto> findByCreatedAtGreaterThanOrIsLastingTrue(LocalDateTime createdAt);
+    List<SystemMessageDto> findByCreatedAtGreaterThanOrIsLastingTrue(Instant createdAt);
 
-    List<SystemMessageDto> findByCreatedAtGreaterThan(LocalDateTime createdAt);
+    List<SystemMessageDto> findByCreatedAtGreaterThan(Instant createdAt);
 }

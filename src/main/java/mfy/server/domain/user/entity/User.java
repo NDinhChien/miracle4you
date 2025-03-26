@@ -1,6 +1,7 @@
 package mfy.server.domain.user.entity;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Set;
 
@@ -70,7 +71,7 @@ public class User {
     private String fullName;
 
     @Column
-    private LocalDateTime birthday;
+    private Instant birthday;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -90,28 +91,28 @@ public class User {
     private String parish;
 
     @Column(nullable = false)
-    private LocalDateTime lastUpdateNickname;
+    private Instant lastUpdateNickname;
 
     @Column(nullable = false)
-    private LocalDateTime lastUpdateProfile;
+    private Instant lastUpdateProfile;
 
     @Column
-    private LocalDateTime lastSendEmail;
+    private Instant lastSendEmail;
 
     @Column
-    private LocalDateTime lastLoginSuccessAt;
+    private Instant lastLoginSuccessAt;
 
     @Column
-    private LocalDateTime lastLoginFailureAt;
+    private Instant lastLoginFailureAt;
 
     @Column
-    private LocalDateTime lastOnline;
+    private Instant lastOnline;
 
     @Column(nullable = false)
     private Integer currentLoginFailureCount;
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime joinedAt;
+    private Instant joinedAt;
 
     @JsonIgnore
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
@@ -142,16 +143,16 @@ public class User {
             role = Role.TRANSLATOR;
         }
         if (joinedAt == null) {
-            joinedAt = LocalDateTime.now();
+            joinedAt = Instant.now();
         }
         if (score == null) {
             score = 0;
         }
         if (nickname != null && lastUpdateNickname == null) {
-            lastUpdateNickname = LocalDateTime.now();
+            lastUpdateNickname = Instant.now();
         }
         if (lastUpdateProfile == null) {
-            lastUpdateProfile = LocalDateTime.now();
+            lastUpdateProfile = Instant.now();
         }
         if (currentLoginFailureCount == null) {
             currentLoginFailureCount = 0;
@@ -160,7 +161,7 @@ public class User {
             updateTokenSecret();
         }
         if (lastOnline == null) {
-            lastOnline = LocalDateTime.now();
+            lastOnline = Instant.now();
         }
     }
 
@@ -196,7 +197,7 @@ public class User {
         updateTokenSecret();
         this.currentLoginFailureCount = 0;
         this.lastLoginFailureAt = null;
-        this.lastLoginSuccessAt = LocalDateTime.now();
+        this.lastLoginSuccessAt = Instant.now();
         return this;
     }
 
@@ -215,8 +216,9 @@ public class User {
     public boolean canDoLogin() {
         var canLogin = currentLoginFailureCount <= AuthService.MAX_LOGIN_ATTEMPT;
         if (canLogin == false) {
-            if (lastLoginFailureAt == null || this.lastLoginFailureAt.plusMinutes(AuthService.RESET_LOGIN_AFTER_MINUS)
-                    .isBefore(LocalDateTime.now())) {
+            if (lastLoginFailureAt == null
+                    || this.lastLoginFailureAt.plus(AuthService.RESET_LOGIN_AFTER_MINUS, ChronoUnit.MINUTES)
+                            .isBefore(Instant.now())) {
                 return true;
             }
         }
@@ -225,20 +227,20 @@ public class User {
 
     public User updateLoginFailure() {
         this.currentLoginFailureCount += 1;
-        this.lastLoginFailureAt = LocalDateTime.now();
+        this.lastLoginFailureAt = Instant.now();
         return this;
     }
 
     public boolean canUpdateNickname() {
         return lastUpdateNickname == null || lastUpdateNickname
-                .isBefore(LocalDateTime.now().minusDays(UserService.UPDATE_NICKNAME_DISTANCE_DAYS));
+                .isBefore(Instant.now().minus(UserService.UPDATE_NICKNAME_DISTANCE_DAYS, ChronoUnit.DAYS));
     }
 
     public User updateNickname(String nickname) {
         if (!canUpdateNickname())
             return this;
         this.nickname = nickname;
-        this.lastUpdateNickname = LocalDateTime.now();
+        this.lastUpdateNickname = Instant.now();
         return this;
     }
 
@@ -251,9 +253,9 @@ public class User {
         String fullName = dto.getFullName();
         String diocese = dto.getDiocese();
         String parish = dto.getParish();
-        String gender = dto.getGender();
+        Gender gender = dto.getGender();
         String bio = dto.getBio();
-        String birthday = dto.getBirthday();
+        Instant birthday = dto.getBirthday();
 
         if (StringUtils.hasText(diocese)) {
             this.diocese = diocese;
@@ -261,8 +263,8 @@ public class User {
         if (StringUtils.hasText(parish)) {
             this.parish = parish;
         }
-        if (StringUtils.hasText(gender)) {
-            this.gender = EnumUtil.fromString(Gender.class, gender);
+        if (gender != null) {
+            this.gender = gender;
         }
         if (StringUtils.hasText(fullName)) {
             this.fullName = fullName;
@@ -270,10 +272,10 @@ public class User {
         if (StringUtils.hasText(bio)) {
             this.bio = bio;
         }
-        if (StringUtils.hasText(birthday)) {
-            this.birthday = CommonUtil.parseDateString(birthday + " 00:00:00");
+        if (birthday != null) {
+            this.birthday = birthday;
         }
-        this.lastUpdateProfile = LocalDateTime.now();
+        this.lastUpdateProfile = Instant.now();
 
         return this;
     }
@@ -289,17 +291,18 @@ public class User {
     }
 
     public User updateLastSendEmail() {
-        this.lastSendEmail = LocalDateTime.now();
+        this.lastSendEmail = Instant.now();
         return this;
     }
 
     public Boolean canSendEmail() {
         return lastSendEmail == null
-                || lastSendEmail.plusMinutes(AuthService.EMAIL_SEND_DISTANCE_MINUS).isBefore(LocalDateTime.now());
+                || lastSendEmail.plus(AuthService.EMAIL_SEND_DISTANCE_MINUS, ChronoUnit.MINUTES)
+                        .isBefore(Instant.now());
     }
 
     public User updateLastOnline() {
-        this.lastOnline = LocalDateTime.now();
+        this.lastOnline = Instant.now();
         return this;
     }
 
